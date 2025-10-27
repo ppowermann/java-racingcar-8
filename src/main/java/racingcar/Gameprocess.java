@@ -14,7 +14,9 @@ public class Gameprocess {
     Gameprocess() {
         carNameSet();
         gameCountSetting();
+        processResult();
         gamePlaying();
+
         resultWinners();
     }
 
@@ -164,6 +166,10 @@ public class Gameprocess {
             result.append(winners[i]);
         }
         System.out.println("최종 우승자 : " + result);
+    }
+
+    void processResult() {
+        System.out.println("실행 결과");
     }
 }
 
