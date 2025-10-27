@@ -6,17 +6,16 @@ import static camp.nextstep.edu.missionutils.Console.readLine;
 import static camp.nextstep.edu.missionutils.Randoms.pickNumberInRange;
 
 public class Gameprocess {
-    int gameCount;
-    String result;
-    String[] carNames;
-    String[] carResults;
-
+    int gameCount; //게임횟수
+    String[] playerNames;  //플레이어들을 모아놓은 배열
+    String[] carResults; //자동차전진 '---'
+    String[] winners; //승자 2명이상일수도 잇으니 배열로
 
     Gameprocess() {
         carNameSet();
         gameCountSetting();
         gamePlaying();
-//        gameResult();
+        resultWinners();
     }
 
     //자동차이름셋팅메서드
@@ -36,7 +35,7 @@ public class Gameprocess {
             }
         }
         commaCount++; //의도적으로 한개더 추가해서 출전자 숫자와 같은 3을 만듬
-        carNames = new String[commaCount];
+        playerNames = new String[commaCount];
         carResults = new String[commaCount];//전진값'-'을 담을 배열도 하나 추가함
         //===============여기까지 해당크기만큼의 배열생성로직===========
 
@@ -45,7 +44,7 @@ public class Gameprocess {
         for (int i = 0; i < inputStringValue.length(); i++) {
             char ch = inputStringValue.charAt(i);
             if (ch == ',') {
-                carNames[carName] = stringBuilderb.toString();
+                playerNames[carName] = stringBuilderb.toString();
                 carName++;
                 stringBuilderb.setLength(0);
             } else {
@@ -53,7 +52,7 @@ public class Gameprocess {
             }
         }
         //마지막은 ,이 없으니 바로 ,없이 저장
-        carNames[carName] = stringBuilderb.toString();
+        playerNames[carName] = stringBuilderb.toString();
 
     }
 
@@ -68,24 +67,59 @@ public class Gameprocess {
     void gamePlaying() {
 
         //Null 안나오게 초기화 한다
-        for (int i = 0; i < carNames.length; i++) {
+        for (int i = 0; i < playerNames.length; i++) {
             carResults[i] = "";
         }
 
-        //이중포문 바깥포는 게임횟수 안은 주사위결과 승리시 - 추가 하는 로직
+        //이중포문 바깥for는 게임횟수 안for는 주사위결과 승리시 '-' 추가 하는 로직
         for (int j = 0; j < gameCount; j++) {
-            for (int k = 0; k < carNames.length; k++) {
+            for (int k = 0; k < playerNames.length; k++) {
                 if (pickNumberInRange(0, 9) >= 4) {
                     carResults[k] += '-';
                 }
-                System.out.println(carNames[k] + ":" + carResults[k]);
+                System.out.println(playerNames[k] + ":" + carResults[k]);
             }
             System.out.println();
         }
 
     }
+
+    void resultWinners() {
+        int maxLength = 0;
+        int winnerCount = 0;
+
+        //가장높은 전진값 추출
+        for (String result : carResults) {
+            if (result.length() > maxLength) {
+                maxLength = result.length();
+            }
+        }
+
+        //가장 높은값 추출한걸로 동점자 수 크기만큼 배열생성
+        for (int i = 0; i < playerNames.length; i++) {
+            if (maxLength == carResults[i].length()) {
+                winnerCount++;
+            }
+        }
+        winners = new String[winnerCount];
+
+
+        int index = 0;
+        for (int i = 0; i < playerNames.length; i++) {
+            if (maxLength == carResults[i].length()) {
+                winners[index] = playerNames[i];
+                index++;
+            }
+
+        }
+        StringBuilder result = new StringBuilder();
+        for (int i = 0; i < winners.length; i++) {
+            if (i > 0) {
+                result.append(", ");
+            }
+            result.append(winners[i]);
+        }
+        System.out.println("최종 우승자 : " + result);
+    }
 }
-//
-//        void gameResult () {
-//            System.out.println("최종 우승자 : " + result);
-//        }
+
