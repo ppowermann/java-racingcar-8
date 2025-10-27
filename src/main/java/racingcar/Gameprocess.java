@@ -17,7 +17,6 @@ public class Gameprocess {
         gameResult();
     }
 
-
     //자동차이름셋팅메서드
     void carNameSet() {
         int commaCount = 0;
