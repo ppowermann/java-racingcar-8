@@ -9,13 +9,14 @@ public class Gameprocess {
     int gameCount;
     String result;
     String[] carNames;
+    String[] carResults;
 
 
     Gameprocess() {
         carNameSet();
         gameCountSetting();
         gamePlaying();
-        gameResult();
+//        gameResult();
     }
 
     //자동차이름셋팅메서드
@@ -36,6 +37,7 @@ public class Gameprocess {
         }
         commaCount++; //의도적으로 한개더 추가해서 출전자 숫자와 같은 3을 만듬
         carNames = new String[commaCount];
+        carResults = new String[commaCount];//전진값'-'을 담을 배열도 하나 추가함
         //===============여기까지 해당크기만큼의 배열생성로직===========
 
         //입력값 inputStringValue 을 char로 쪼개서 ,를 만나면 스트링빌더로 배열0번째에 저장함
@@ -64,16 +66,26 @@ public class Gameprocess {
     }
 
     void gamePlaying() {
-        for (String carName : carNames) {
-            System.out.println(carName);
 
+        //Null 안나오게 초기화 한다
+        for (int i = 0; i < carNames.length; i++) {
+            carResults[i] = "";
         }
-        pickNumberInRange(0, 9);
+
+        //이중포문 바깥포는 게임횟수 안은 주사위결과 승리시 - 추가 하는 로직
+        for (int j = 0; j < gameCount; j++) {
+            for (int k = 0; k < carNames.length; k++) {
+                if (pickNumberInRange(0, 9) >= 4) {
+                    carResults[k] += '-';
+                }
+                System.out.println(carNames[k] + ":" + carResults[k]);
+            }
+            System.out.println();
+        }
 
     }
-
-    void gameResult() {
-        System.out.println("최종 우승자 : " + result);
-    }
-
 }
+//
+//        void gameResult () {
+//            System.out.println("최종 우승자 : " + result);
+//        }
