@@ -14,9 +14,8 @@ public class Gameprocess {
     Gameprocess() {
         carNameSet();
         gameCountSetting();
-        processResult();
-        gamePlaying();
 
+        gamePlaying();
         resultWinners();
     }
 
@@ -66,13 +65,11 @@ public class Gameprocess {
         playerNames[carName] = lastName;
 
         //마지막 경우도 예외처리
-        String name = stringBuilderb.toString().trim();
-        validateCarName(name);
 
-        if (playerNames[carName].isEmpty()) {
+        if (lastName.isEmpty()) {
             throw new IllegalArgumentException("자동차 이름은 비어있을 수 없습니다.");
         }
-        if (playerNames[carName].length() > 5) {
+        if (lastName.length() > 5) {
             throw new IllegalArgumentException("자동차 이름은 5자 이하만 가능합니다.");
         }
 
@@ -112,6 +109,7 @@ public class Gameprocess {
     }
 
     void gamePlaying() {
+        System.out.println("\n실행 결과");
 
         //Null 안나오게 초기화 한다
         for (int i = 0; i < playerNames.length; i++) {
@@ -168,8 +166,5 @@ public class Gameprocess {
         System.out.println("최종 우승자 : " + result);
     }
 
-    void processResult() {
-        System.out.println("실행 결과");
-    }
 }
 
