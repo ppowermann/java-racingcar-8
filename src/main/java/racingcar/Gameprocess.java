@@ -23,6 +23,12 @@ public class Gameprocess {
         int commaCount = 0;
         System.out.print("경주할 자동차 이름(이름은 쉼표(,) 기준으로 구분)    :");
         String inputStringValue = readLine();
+
+        if (inputStringValue == null || inputStringValue.trim().isEmpty()) {
+            throw new IllegalArgumentException("입력값을 넣으세요");
+        }
+
+
         StringBuilder stringBuilderb = new StringBuilder();
 
         //ex) inputStringValue =
@@ -42,17 +48,36 @@ public class Gameprocess {
         //입력값 inputStringValue 을 char로 쪼개서 ,를 만나면 스트링빌더로 배열0번째에 저장함
         int carName = 0;
         for (int i = 0; i < inputStringValue.length(); i++) {
-            char ch = inputStringValue.charAt(i);
-            if (ch == ',') {
+            char char1 = inputStringValue.charAt(i);
+            if (char1 == ',') {
+
+                String name = stringBuilderb.toString().trim();
+                if (name.isEmpty()) {
+                    throw new IllegalArgumentException("자동차 이름은 비어있을 수 없습니다.");
+                }
+
+                // ✅ 검증 3: 이름이 5자 초과
+                if (name.length() > 5) {
+                    throw new IllegalArgumentException("자동차 이름은 5자 이하만 가능합니다.");
+                }
+
                 playerNames[carName] = stringBuilderb.toString();
                 carName++;
                 stringBuilderb.setLength(0);
             } else {
-                stringBuilderb.append(ch);
+                stringBuilderb.append(char1);
             }
         }
         //마지막은 ,이 없으니 바로 ,없이 저장
         playerNames[carName] = stringBuilderb.toString();
+
+        //마지막 경우도 예외처리
+        if (playerNames[carName].isEmpty()) {
+            throw new IllegalArgumentException("자동차 이름은 비어있을 수 없습니다.");
+        }
+        if (playerNames[carName].length() > 5) {
+            throw new IllegalArgumentException("자동차 이름은 5자 이하만 가능합니다.");
+        }
 
     }
 
@@ -61,7 +86,18 @@ public class Gameprocess {
     void gameCountSetting() {
         System.out.print("시도할 횟수는 몇 회인가요?  :");
         gameCount = Integer.parseInt(Console.readLine());
-        ///두번째 게임로직은 특별히 할것 없는 것 같아 커밋함
+
+        //숫자가 아닌값을 입력 오류발생
+        try {
+            gameCount = Integer.parseInt(Console.readLine());
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("숫자만 입력 가능합니다.");
+        }
+
+        //영과 음수 입력시 오류
+        if (gameCount <= 0) {
+            throw new IllegalArgumentException("게임 횟수는 1 이상이어야 합니다.");
+        }
     }
 
     void gamePlaying() {
