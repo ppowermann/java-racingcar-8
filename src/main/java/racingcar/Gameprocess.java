@@ -8,6 +8,7 @@ import static camp.nextstep.edu.missionutils.Randoms.pickNumberInRange;
 public class Gameprocess {
     int gameCount;
     String result;
+    String[] carNames;
 
 
     Gameprocess() {
@@ -34,7 +35,7 @@ public class Gameprocess {
             }
         }
         commaCount++; //의도적으로 한개더 추가해서 출전자 숫자와 같은 3을 만듬
-        String[] carNames = new String[commaCount];
+        carNames = new String[commaCount];
         //===============여기까지 해당크기만큼의 배열생성로직===========
 
         //입력값 inputStringValue 을 char로 쪼개서 ,를 만나면 스트링빌더로 배열0번째에 저장함
@@ -51,6 +52,7 @@ public class Gameprocess {
         }
         //마지막은 ,이 없으니 바로 ,없이 저장
         carNames[carName] = stringBuilderb.toString();
+
     }
 
 
@@ -62,7 +64,12 @@ public class Gameprocess {
     }
 
     void gamePlaying() {
+        for (String carName : carNames) {
+            System.out.println(carName);
+
+        }
         pickNumberInRange(0, 9);
+
     }
 
     void gameResult() {
