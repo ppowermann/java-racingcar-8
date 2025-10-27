@@ -50,16 +50,8 @@ public class Gameprocess {
         for (int i = 0; i < inputStringValue.length(); i++) {
             char char1 = inputStringValue.charAt(i);
             if (char1 == ',') {
-
                 String name = stringBuilderb.toString().trim();
-                if (name.isEmpty()) {
-                    throw new IllegalArgumentException("자동차 이름은 비어있을 수 없습니다.");
-                }
-
-
-                if (name.length() > 5) {
-                    throw new IllegalArgumentException("자동차 이름은 5자 이하만 가능합니다.");
-                }
+                validateCarName(name);
                 playerNames[carName] = name;
                 carName++;
                 stringBuilderb.setLength(0);
@@ -72,6 +64,9 @@ public class Gameprocess {
         playerNames[carName] = lastName;
 
         //마지막 경우도 예외처리
+        String name = stringBuilderb.toString().trim();
+        validateCarName(name);
+
         if (playerNames[carName].isEmpty()) {
             throw new IllegalArgumentException("자동차 이름은 비어있을 수 없습니다.");
         }
@@ -79,6 +74,15 @@ public class Gameprocess {
             throw new IllegalArgumentException("자동차 이름은 5자 이하만 가능합니다.");
         }
 
+    }
+
+    void validateCarName(String name) {
+        if (name.isEmpty()) {
+            throw new IllegalArgumentException("자동차 이름은 비어있을 수 없습니다.");
+        }
+        if (name.length() > 5) {
+            throw new IllegalArgumentException("자동차 이름은 5자 이하만 가능합니다.");
+        }
     }
 
 
@@ -99,6 +103,12 @@ public class Gameprocess {
         }
     }
 
+    void moveCar(int carIndex) {
+        if (pickNumberInRange(0, 9) >= 4) {
+            carResults[carIndex] += '-';
+        }
+    }
+
     void gamePlaying() {
 
         //Null 안나오게 초기화 한다
@@ -109,15 +119,14 @@ public class Gameprocess {
         //이중포문 바깥for는 게임횟수 안for는 주사위결과 승리시 '-' 추가 하는 로직
         for (int j = 0; j < gameCount; j++) {
             for (int k = 0; k < playerNames.length; k++) {
-                if (pickNumberInRange(0, 9) >= 4) {
-                    carResults[k] += '-';
-                }
+                moveCar(k);
                 System.out.println(playerNames[k] + ":" + carResults[k]);
             }
             System.out.println();
         }
 
     }
+
 
     void resultWinners() {
         int maxLength = 0;
