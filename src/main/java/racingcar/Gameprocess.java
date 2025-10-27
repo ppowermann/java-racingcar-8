@@ -56,12 +56,11 @@ public class Gameprocess {
                     throw new IllegalArgumentException("자동차 이름은 비어있을 수 없습니다.");
                 }
 
-                // ✅ 검증 3: 이름이 5자 초과
+
                 if (name.length() > 5) {
                     throw new IllegalArgumentException("자동차 이름은 5자 이하만 가능합니다.");
                 }
-
-                playerNames[carName] = stringBuilderb.toString();
+                playerNames[carName] = name;
                 carName++;
                 stringBuilderb.setLength(0);
             } else {
@@ -69,7 +68,8 @@ public class Gameprocess {
             }
         }
         //마지막은 ,이 없으니 바로 ,없이 저장
-        playerNames[carName] = stringBuilderb.toString();
+        String lastName = stringBuilderb.toString().trim();
+        playerNames[carName] = lastName;
 
         //마지막 경우도 예외처리
         if (playerNames[carName].isEmpty()) {
@@ -84,11 +84,10 @@ public class Gameprocess {
 
     //게임횟수셋팅 메서드
     void gameCountSetting() {
-        System.out.print("시도할 횟수는 몇 회인가요?  :");
-        gameCount = Integer.parseInt(Console.readLine());
 
         //숫자가 아닌값을 입력 오류발생
         try {
+            System.out.print("시도할 횟수는 몇 회인가요?  :");
             gameCount = Integer.parseInt(Console.readLine());
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException("숫자만 입력 가능합니다.");
