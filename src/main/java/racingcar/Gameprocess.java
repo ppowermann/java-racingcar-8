@@ -53,10 +53,12 @@ public class Gameprocess {
         carNames[carName] = stringBuilderb.toString();
     }
 
+
     //게임횟수셋팅 메서드
     void gameCountSetting() {
         System.out.print("시도할 횟수는 몇 회인가요?  :");
         gameCount = Integer.parseInt(Console.readLine());
+        ///두번째 게임로직은 특별히 할것 없는 것 같아 커밋함
     }
 
     void gamePlaying() {
